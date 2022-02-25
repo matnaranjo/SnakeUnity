@@ -28,7 +28,7 @@ public class Body : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         FindFood();
         AddBodySegment();
@@ -37,6 +37,7 @@ public class Body : MonoBehaviour
     private void AddBodySegment(){
         HeadPosX = Head.transform.position.x;
         HeadPosY = Head.transform.position.y;
+        Debug.Log("si entro");
         if ((HeadPosX>FoodPosX-0.1f && HeadPosX<FoodPosX+0.1f ) && (HeadPosY>FoodPosY-0.1f && HeadPosY<FoodPosY+0.1f)){
             int BodyLength=SnakeBody.Count;
             GameObject NewBlock = Instantiate(BodyBlock,Head.transform.position, Head.transform.rotation);
