@@ -194,7 +194,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 512655878}
-  - component: {fileID: 512655879}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -216,20 +215,6 @@ Transform:
   m_Father: {fileID: 1214302978}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &512655879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 512655877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99949e3bf4eaeb445a03eb55f8570368, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BodyBlock: {fileID: 3877000941804778211, guid: b2ff2a83f2fd9024197ae5d1edaff48c, type: 3}
-  Head: {fileID: 406708141}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1157791094}
+  - component: {fileID: 1157791095}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -582,6 +568,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1157791095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157791093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9635804140c56fd45814584c039d77c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1214302977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,6 +1195,10 @@ PrefabInstance:
       value: Head
       objectReference: {fileID: 0}
     - target: {fileID: 7543627872703512413, guid: 160d10cd78b53cb4081a88afe75f72f9, type: 3}
+      propertyPath: BodyBlock
+      value: 
+      objectReference: {fileID: 3877000941804778211, guid: b2ff2a83f2fd9024197ae5d1edaff48c, type: 3}
+    - target: {fileID: 7543627872703512413, guid: 160d10cd78b53cb4081a88afe75f72f9, type: 3}
       propertyPath: ScoreText
       value: 
       objectReference: {fileID: 2018453121}
@@ -1204,5 +1206,6 @@ PrefabInstance:
       propertyPath: FoodToSpawn
       value: 
       objectReference: {fileID: 4056836922415472164, guid: 5683d367fe60ae24586720bcd5a4aed1, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 406708140, guid: 160d10cd78b53cb4081a88afe75f72f9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 160d10cd78b53cb4081a88afe75f72f9, type: 3}
