@@ -6,7 +6,7 @@ public class SnakeMovement : MonoBehaviour
 {
 
     private int Move = 0; 
-    private int Refresh = 10;
+    private int Refresh = 7;
 
     private float MovementX=0f;
     private float MovementY=0f;

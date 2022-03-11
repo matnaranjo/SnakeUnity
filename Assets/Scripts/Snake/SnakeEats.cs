@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SnakeEats : MonoBehaviour
 {
-    private GameObject FoodParticle = null;
-    private GameObject[] SnakeSegments = new GameObject[] {};
 
     [SerializeField]
     private GameObject FoodToSpawn = null;
+    [SerializeField]
+    private Text ScoreText;
+    private GameObject FoodParticle = null;
+    private GameObject[] SnakeSegments = new GameObject[] {};
 
     private List <int> AvailableSpotsX = new List<int>();
     private List <int> AvailableSpotsY = new List<int>();
@@ -21,6 +24,8 @@ public class SnakeEats : MonoBehaviour
     private float FoodPosY;
     private float HeadPosX;
     private float HeadPosY;
+
+    private int Score=0;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +44,7 @@ public class SnakeEats : MonoBehaviour
 
     }
 
+    // Compares the position of the snake's head with the food's position and if they are in the same grid position, firts, the food particle is Destroyed, then, the grid matrix is updated, a point is added to the score, and a new position for a new food particle is decided.
     private void SnakeFindsFood(){
 
         HeadPosX = transform.position.x;
@@ -46,6 +52,10 @@ public class SnakeEats : MonoBehaviour
         if ((HeadPosX>FoodPosX-0.1f && HeadPosX<FoodPosX+0.1f ) && (HeadPosY>FoodPosY-0.1f && HeadPosY<FoodPosY+0.1f)){
             Destroy(FoodParticle);
             GridUpdate();
+
+            Score++;
+            ScoreText.text = "Score: "+ Score;
+            
 
             AvailableSpotsX.Clear();
             AvailableSpotsY.Clear();
@@ -66,7 +76,8 @@ public class SnakeEats : MonoBehaviour
 
         }
     }
-
+    
+    // Finds any object with tag food, before comparing the positions of the snake head with it.
     private void FindFood(){
         if (FoodParticle == null){
             FoodParticle = GameObject.FindWithTag("Food");
@@ -75,11 +86,15 @@ public class SnakeEats : MonoBehaviour
         }
     }
 
+
+
+    // Every Time the snake eats, updates the game grid, leaving empty spaces with an 'e' and the spaces where the snake is WaitWhile an'f'
     private void GridUpdate(){
         int GridPosX=0;
         int GridPosY=0;
         float SegmentPosX = 0f;
         float SegmentPosY =0f;
+        FillArray();
         SnakeSegments = new GameObject[] {};
         SnakeSegments = GameObject.FindGameObjectsWithTag("Snake");  
         foreach (GameObject Segment in SnakeSegments){
@@ -92,6 +107,9 @@ public class SnakeEats : MonoBehaviour
         }
     }
 
+
+
+    // Transforms the position of every snake segment into grid positions
     private int XFunction(float XPos){
         int GridX = 0;
         GridX = (int)Mathf.Round((2.5f*XPos)+9.5f);
@@ -101,5 +119,28 @@ public class SnakeEats : MonoBehaviour
         int GridY = 0;
         GridY = (int)Mathf.Round((-2.5f*YPos)+6.5f);
         return GridY;
+    }
+
+    private void FillArray(){
+        GridStatus.GridArray = new char [20,20]{{'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'},
+                                                {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e'}};
     }
 }
