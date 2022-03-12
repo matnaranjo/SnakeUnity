@@ -79,8 +79,6 @@ public class SnakeEats : MonoBehaviour
             SnakeFindsFood();
             Move=0;
         }
-
-        Debug.Log(Alive); 
     }
 
     // Compares the position of the snake's head with the food's position and if they are in the same grid position, firts, the food particle is Destroyed, then, the grid matrix is updated, a point is added to the score, and a new position for a new food particle is decided.
@@ -128,9 +126,6 @@ public class SnakeEats : MonoBehaviour
             FoodParticle = GameObject.FindWithTag("Food");
             FoodPosX = FoodParticle.transform.position.x;
             FoodPosY = FoodParticle.transform.position.y;
-
-            Debug.Log("X: "+ FoodPosX);
-            Debug.Log("Y: "+ FoodPosY);
 
         }
     }
