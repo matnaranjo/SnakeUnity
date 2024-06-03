@@ -18,6 +18,9 @@ public class PlayfabFacebookAuthExample : MonoBehaviour
         
     }
 
+    /// <summary>
+    ///Initiali
+    /// </summary>
     public void FaceBookLogInButton(){
         FB.Init(OnFacebookInitialized);
     }

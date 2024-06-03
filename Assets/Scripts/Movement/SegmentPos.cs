@@ -24,17 +24,4 @@ public class SegmentPos : MonoBehaviour
             gameObject.transform.position = new Vector3(xPos, ypos);
             }
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -10,22 +10,43 @@ public class PlayfabGooglePlayGames : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI text;
     [SerializeField]
+    TextMeshProUGUI nameText;
+    [SerializeField]
     UIManager uiManager;
+
 
     public bool isAuth;
     
+
+    //Check if the user is authenticated or not when entering the scene
     void Start()
     {
-        if (PlayGamesPlatform.Instance.IsAuthenticated()){
-            text.text = "Cat1 auth";
-            uiManager.UserIsAuth();
-        }
-        else{
-            text.text = "Cat1 NO auth";
-            AutoAuthentication();
-        }
+        // if (PlayGamesPlatform.Instance.IsAuthenticated()){
+        //     //if authenticated, change UI to UserIsAuth
+        //     text.text = "Cat1 auth";
+        //     uiManager.UserIsAuth();
+        // }
+        // else{
+        //     //if not, call for the autoAuthentication
+        //     text.text = "Cat1 NO auth";
+        //     AutoAuthentication();
+        // }
+
+        AutoAuthentication();
+
     }
 
+    /// <summary>
+    /// When the user is not authenticated as soon as the game starts, it will call for authoauthentication of a previously used google play games account and call for ProcessAuthentication to see if it was completed successfully or not
+    /// </summary>
+    private void AutoAuthentication(){
+        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+    }
+
+    /// <summary>
+    /// Starts a call to request access to the server side. 
+    /// </summary>
+    /// <param name="status"></param>
     internal void ProcessAuthentication(SignInStatus status)
     {
         if (status == SignInStatus.Success)
@@ -46,7 +67,10 @@ public class PlayfabGooglePlayGames : MonoBehaviour
         {
             ServerAuthCode = serverAuthCode,
             CreateAccount = true,
-            TitleId = PlayFabSettings.TitleId
+            TitleId = PlayFabSettings.TitleId,
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams{
+                GetPlayerProfile = true
+            }
         };
 
         PlayFabClientAPI.LoginWithGooglePlayGamesServices(request, OnLoginWithGooglePlayGamesServicesSuccess, OnLoginWithGooglePlayGamesServicesFailure);
@@ -55,7 +79,20 @@ public class PlayfabGooglePlayGames : MonoBehaviour
     private void OnLoginWithGooglePlayGamesServicesSuccess(LoginResult result)
     {
         isAuth =true;
-        uiManager.UserIsAuth();
+        if (result.InfoResultPayload.PlayerProfile.DisplayName== null){
+            uiManager.UserNoName();
+            nameText.text = result.InfoResultPayload.PlayerProfile.DisplayName + "profile exists";
+        }
+        else{
+            string userName = result.InfoResultPayload.PlayerProfile.DisplayName;
+
+            //Save name in playerprefs
+            PlayerPrefs.SetString("userid", result.PlayFabId);
+            PlayerPrefs.SetString("username", userName);
+
+            uiManager.UserIsAuth(userName);
+            nameText.text = "profile does NOT exists";
+        }
         text.text = "PF Login Success LoginWithGooglePlayGamesServices";
     }
 
@@ -70,9 +107,7 @@ public class PlayfabGooglePlayGames : MonoBehaviour
         PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
     }
 
-    private void AutoAuthentication(){
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-    }
+    
 
 
 }

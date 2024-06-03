@@ -6,6 +6,21 @@ TagManager:
   tags:
   - login
   - gpg
+  - grid
+  - food
+  - snakebody
+  - gamemanager
+  - storage
+  - startmenu
+  - controls
+  - defeat
+  - configuration
+  - leaderboard
+  - speed
+  - head
+  - menumanager
+  - inputname
+  - namemsg
   layers:
   - Default
   - TransparentFX

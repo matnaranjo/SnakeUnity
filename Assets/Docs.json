@@ -1,0 +1,49 @@
+{
+ "Snake Rebirth": 
+ {"Auth":{
+   "PlayfabFacebookAuthExample":"",
+   "PlayfabGooglePlayGames": ""
+   },
+  "BodyControl":{
+   "Body":
+    {
+      "ChangeFathers": "Function: If snake eats, transfer one of the objects from the storage to the body using transform.SetParent(Transform)"
+    }
+   },
+  "Food":{
+   "FoodBehavior":""
+   },
+  "GameManager":{
+   "GameManager":""
+   },
+  "Grid":{
+   "GridStatus":
+    {
+      "ClearArrayValues": "Function: Clears both the list of empty spaces to 0 items and the gameArray to everything = 'e' ",
+      "GridUpdate": "Function: Recieves an int[] to change the spaces where there are segments of the snake to 'f', Using a 2 elements array as input"
+    }
+   },
+  "Movement":{
+   "MovementBehavior":
+   {
+      "Enable and Disable": "Region: Contains the MonoBehaviour functios OnEnable and OnDisable, enables and disables the input",
+      "Awake": "MonoBehaviour Function: Initializes the input object",
+      "Update":"MonoBehaviour Function: Runs the function Direction()",
+      "Direction": "Function: Gets the input from the joystic, or keyboard and processes it to the directions Up, Down, Left and Right, assigning those values to the variable inputDir which runs every Update()",
+      "DirectionCheck": "Function: Gets the value of the inputDir and compares it with diferent situations such as: - If the snake is not moving (Start of the game) it can change to + or - X axis and only in the + Y axis-, - If the snake is moving in the + or - Y axis, it can only change to + or - X axis -, - If the snake is moving in the + or - X axis, it can only change to + or - Y axis -",
+      "DirectionCall": "Funtion: Public function to call the DirectionCheck(inputDir) function"
+   },
+   "SegmentPos":"",
+   "SnakeMovement":""
+   },
+  "SceneManager":{
+   "SceneChange":""
+   },
+  "ScreenShoot":{
+   "SS":""
+   },
+  "UIManager":{
+   "UIManager":""
+   }
+ }
+}

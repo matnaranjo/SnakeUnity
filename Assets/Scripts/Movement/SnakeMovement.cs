@@ -7,18 +7,22 @@ public class SnakeMovement : MonoBehaviour
 {
 
     GameObject snakeSegments;
+    GameManager gameManager;
+    MenuManager menuManager;
     MovementBehavior movementInfo;
     FoodBehavior food;
     GridStatus grid;
     Vector2 snakeDir;
     int [] snakeDirInt = {0,0};
     int [] snakePos = {11,0};
+    public int[] SnakePos{
+        set{snakePos=value;}
+    }
     int [] prevPos = {0,0};
     int [] limits = {0, 23};
     float step = 0.4f;
-    int speed = 4;
+    int speed = 3;
     int counter = 0;
-
     public int posX;
     public int posY;
 
@@ -27,51 +31,51 @@ public class SnakeMovement : MonoBehaviour
     void Start()
     {
         movementInfo = GameObject.FindGameObjectWithTag("gamemanager").GetComponent<MovementBehavior>();
+        gameManager = GameObject.FindGameObjectWithTag("gamemanager").GetComponent<GameManager>();
+        menuManager = GameObject.FindGameObjectWithTag("menumanager").GetComponent<MenuManager>();
 
         snakeSegments = GameObject.FindGameObjectWithTag("snakebody");
         
         grid = GameObject.FindGameObjectWithTag("grid").GetComponent<GridStatus>();
 
         food = GameObject.FindGameObjectWithTag("food").GetComponent<FoodBehavior>();
-
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Movement();
-        IsFeed();
+        OnGame();
     }
 
     /// <summary>
     /// Based on the direction information given by MovementBehavior, moves the snake both in the screen and in the matrix.
     /// </summary>
     void Movement(){
+
+        movementInfo.DirectionCall();
         //calls snakeDir from the movement behavior script
         snakeDir = movementInfo.SnakeDir;
 
-        if (counter>=speed){
-            //analizes a prestep.
-            Vector3 snakeStep = snakeDir * step;
+        //analizes a prestep.
+        Vector3 snakeStep = snakeDir * step;
 
-            //moves the "snake" in the matrix indexes, also sets the new position to CheckForLimits.
-            ToMatrixNotation();
+        //moves the "snake" in the matrix indexes, also sets the new position to CheckForLimits.
+        ToMatrixNotation();
 
-            //if the snake goes further than the limits, make timescale 0 and step 0
-            //so the snake just dies and does not move outside of the limits.
-            if (CheckForLimits() || CheckForBody()){
-                snakeStep *= 0;
-                Time.timeScale = 0;
-            }
-
+        //if the snake goes further than the limits, make timescale 0 and step 0
+        //so the snake just dies and does not move outside of the limits.
+        if (CheckForLimits() || CheckForBody()){
+            snakeStep *= 0;
+            gameManager.Death();
+            menuManager.Defeat();
+        }
+        
+        if (gameManager.IsAlive){
             // snake's head moves and counter goes to 0, to start a new count.
             gameObject.transform.position += snakeStep;
             // snake body follows the head movement
             SegmentMovement(prevPos);
-
-            counter=0;
         }
-        counter ++;
     }
 
     /// <summary>
@@ -96,6 +100,7 @@ public class SnakeMovement : MonoBehaviour
         foreach (SegmentPos segment in segments)
         {
             if (snakePos[0] == segment.Pos[0] && snakePos[1] == segment.Pos[1]){
+                Debug.Log(snakeDir);
                 return true;
             }
         }
@@ -117,7 +122,6 @@ public class SnakeMovement : MonoBehaviour
         posY = snakePos[1];
 
     }
-
 
     /// <summary>
     /// Gets all the components of Type SegmentPos of the segments stored in the object with tag "snakebody" declared in Start()<br/>
@@ -141,7 +145,6 @@ public class SnakeMovement : MonoBehaviour
         }
 
     }
-
 
     /// <summary>
     /// Gets all the components in the object with thag "snakebody"<br/>
@@ -168,19 +171,35 @@ public class SnakeMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// if the postion in the gameGrid of the snake head is the same as the position of the food, update the information of the grid and repositions the food in the empty cells.
+    /// if the postion in the gameGrid of the snake head is the same as the position of the food, update the information of the grid and repositions the food in the empty cells and updates the score UI.
     /// </summary>
     void IsFeed(){
-
+        
         if (food.FoodPos[0] == snakePos[0] && food.FoodPos[1] == snakePos[1]){
             UpdateGrid();
             food.RepositionFood(grid.emptyIndexes);
             Body.ChangeFathers();
+            gameManager.ChangeScore();
         }
     }
 
+    /// <summary>
+    /// Runs Movement and IsFeed only if IsAlive is true.
+    /// </summary>
+    void OnGame(){
+        if (gameManager.IsAlive){
 
-
+            if(counter >= gameManager.Speed){
+                Movement();
+                IsFeed();
+                counter=0;
+            }
+            counter++;
+        }
+        else{
+            snakeDir = Vector2.zero;
+        }
+    }
 
 
 }
