@@ -14,6 +14,8 @@ public class UpdateLeaderboard : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI test;
 
+    string playerStatistic="";
+
 
     public void SaveMaxScore(int score){
         UpdatePlayerStatisticsRequest request = new UpdatePlayerStatisticsRequest{
@@ -42,23 +44,46 @@ public class UpdateLeaderboard : MonoBehaviour
             PlayFabId = PlayerPrefs.GetString("userid"),
             MaxResultsCount = 1
         };
-        test.text = "getting personal scores";
         PlayFabClientAPI.GetLeaderboardAroundPlayer(request, OnLeaderBoardPlayerSuccess, OnError);
     }
 
     void OnLeaderBoardPlayerSuccess(GetLeaderboardAroundPlayerResult result){
         List<PlayerLeaderboardEntry> playerEntry = result.Leaderboard;
-        string playerStatistic="";
-        test.text = "result melo";
+        playerStatistic="";
+        
         if(playerEntry.Count>0){
-            playerStatistic = $"{playerEntry[0].Position+1}.  {playerEntry[0].DisplayName}  {playerEntry[0].StatValue}";
-        test.text = playerStatistic;
+            if (playerEntry[0].Position > 9){
+                playerStatistic += $"{playerEntry[0].Position+1}  {playerEntry[0].DisplayName}  {playerEntry[0].StatValue}";
+                Get10Scores(9, playerStatistic);
+            }
+            else{
+                Get10Scores(10, playerStatistic);
+            }
         }
         else{
             playerStatistic = "No highscore found";
-        test.text = playerStatistic;
+            menuManager.LeaderboardUpdate(playerStatistic);
         }
+    }
 
+
+    public void Get10Scores(int resultCount, string playerData){
+        GetLeaderboardRequest request = new GetLeaderboardRequest(){
+            StatisticName = "HighScore",
+            MaxResultsCount = resultCount
+        };
+
+        PlayFabClientAPI.GetLeaderboard(request,result=> OnGet10Scores(result, playerData), OnError);
+    }
+
+    void OnGet10Scores( GetLeaderboardResult result, string playerData){
+        List<PlayerLeaderboardEntry> entries = result.Leaderboard;
+        foreach (PlayerLeaderboardEntry entry in entries){
+            playerStatistic += $"{entry.Position+1}  {entry.DisplayName}  {entry.StatValue}\n";
+        }
+        if (playerData!=""){
+            playerStatistic += playerData;
+        }
         menuManager.LeaderboardUpdate(playerStatistic);
     }
 
