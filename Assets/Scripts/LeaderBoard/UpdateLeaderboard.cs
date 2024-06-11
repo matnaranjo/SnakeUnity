@@ -67,11 +67,11 @@ public class UpdateLeaderboard : MonoBehaviour
         scoreStatistic="";
         
         if(playerEntry.Count>0){
-            if (playerEntry[0].Position > 4){
-                Get10Scores(4, $"{playerEntry[0].Position+1}", $"{playerEntry[0].DisplayName}", $"{playerEntry[0].StatValue}");
+            if (playerEntry[0].Position > 9){
+                Get10Scores(9, $"{playerEntry[0].Position+1}", $"{playerEntry[0].DisplayName}", $"{playerEntry[0].StatValue}");
             }
             else{
-                Get10Scores(5, "", "", "");
+                Get10Scores(10, "", "", "");
             }
         }
         else{
