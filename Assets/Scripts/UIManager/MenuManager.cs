@@ -16,7 +16,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     GameObject startMenu;
     [SerializeField]
-    TextMeshProUGUI leaderBoardTxt;
+    TextMeshProUGUI posTxt;
+    [SerializeField]
+    TextMeshProUGUI nameTxt;
+    [SerializeField]
+    TextMeshProUGUI scoreTxt;
+    [SerializeField]
+    TextMeshProUGUI highScore;
 
     public void StartBtn(){
         startMenu.SetActive(false);
@@ -45,7 +51,13 @@ public class MenuManager : MonoBehaviour
         leaderBoard.SetActive(true);
     }
 
-    public void LeaderboardUpdate(string leaderBoardResult){
-        leaderBoardTxt.text = leaderBoardResult;
+    public void LeaderboardUpdate(string position, string name, string score){
+        posTxt.text = position;
+        nameTxt.text = name;
+        scoreTxt.text = score;
+    }
+
+    public void SetHighScoreUI(string highScorestr){
+        highScore.text = highScorestr;
     }
 }
