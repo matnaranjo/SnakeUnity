@@ -13,8 +13,4 @@ public class Score : MonoBehaviour
         scoreTxt.text = scoreInt.ToString();
         Debug.Log(gameObject.name);
     }
-
-    public void MaxScore(){
-        
-    }
 }

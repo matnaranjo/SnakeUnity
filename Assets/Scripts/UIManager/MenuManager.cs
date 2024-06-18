@@ -23,23 +23,48 @@ public class MenuManager : MonoBehaviour
     TextMeshProUGUI scoreTxt;
     [SerializeField]
     TextMeshProUGUI highScore;
+    [SerializeField]
+    GameObject congrats;
+    [SerializeField]
+    GameObject youDied;
+    [SerializeField]
+    TextMeshProUGUI finalScore;
+    [SerializeField]
+    TextMeshProUGUI newHighScore;
+    [SerializeField]
+    GameManager gm;
 
+    ///<summary>
+    ///
+    ///</summary>
     public void StartBtn(){
         startMenu.SetActive(false);
-
         controls.SetActive(true);
     }
 
-    public void Defeat(){
+    public void Defeat(bool isHighScore){
         controls.SetActive(false);
 
         defeat.SetActive(true);
+
+        if(isHighScore){
+            congrats.SetActive(true);
+            youDied.SetActive(false);
+            newHighScore.text = gm.score.ToString();
+        }
+        else{
+            congrats.SetActive(false);
+            youDied.SetActive(true);
+            finalScore.text = gm.score.ToString();
+        }
     }
 
     public void MainMenu(){
         configuration.SetActive(false);
         controls.SetActive(false);
         defeat.SetActive(false);
+        congrats.SetActive(false);
+        youDied.SetActive(false);
         leaderBoard.SetActive(false);
 
         startMenu.SetActive(true);

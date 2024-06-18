@@ -67,7 +67,7 @@ public class SnakeMovement : MonoBehaviour
         if (CheckForLimits() || CheckForBody()){
             snakeStep *= 0;
             gameManager.Death();
-            menuManager.Defeat();
+            menuManager.Defeat(gameManager.isScoreNewHighScore());
         }
         
         if (gameManager.IsAlive){

@@ -15,6 +15,11 @@ public class SubmitName : MonoBehaviour
     TMP_InputField inputName;
     TextMeshProUGUI txtMessage;
 
+    ///<summary>
+    ///Gets the text in the textbox and checks if it is less than 4 chars<br/> 
+    ///more than 12 chars or has any no numeric or alphanumeric character<br/>
+    /// if it does, shows the error message, if not, proceeds submitting the name to the system
+    ///</summary>
     public void CheckName(){
         inputName = GameObject.FindGameObjectWithTag("inputname").GetComponent<TMP_InputField>();
         txtMessage = GameObject.FindGameObjectWithTag("namemsg").GetComponent<TextMeshProUGUI>();
@@ -31,17 +36,29 @@ public class SubmitName : MonoBehaviour
 
     }
 
+    ///<summary>
+    ///calls for updating the name of the user.
+    ///</summary>
     private void SubmitToCloud(string name){
         UpdateUserTitleDisplayNameRequest request = new UpdateUserTitleDisplayNameRequest{
-            DisplayName = name
+            DisplayName = name,
         };
 
         PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnSuccess, OnError);
     }
 
+    ///<summary>
+    ///If it is successfull, saves ID and name in playerprefs and refreshes the UI to continue
+    ///</summary>
     private void OnSuccess(UpdateUserTitleDisplayNameResult result){
+        PlayerPrefs.SetString("userid", result.Request.AuthenticationContext.PlayFabId);
+        PlayerPrefs.SetString("username", result.DisplayName);
         uiManager.UserWithName(result.DisplayName);
     }
+
+    ///<summary>
+    ///If it is not successfull is because the name was not available or something else happened.
+    ///<summary>
     private void OnError(PlayFabError error){
 
         if(error.Error == PlayFabErrorCode.NameNotAvailable){

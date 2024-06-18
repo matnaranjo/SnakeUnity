@@ -49,19 +49,24 @@ public class PlayfabGooglePlayGames : MonoBehaviour
     /// <param name="status"></param>
     internal void ProcessAuthentication(SignInStatus status)
     {
+        //if there is a connection, procees with the authentication
         if (status == SignInStatus.Success)
         {
-            text.text = "Cat3 auth succ";
+            // text.text = "Cat3 auth succ";
             PlayGamesPlatform.Instance.RequestServerSideAccess(false, ProcessServerAuthCode);
         }
         else{
-            text.text = "here4 auth NO succ" + status;
+            // text.text = "here4 auth NO succ" + status;
         }
     }
 
+    ///<summary>
+    /// Sends credentials to confirm the user is authenticated<br/>
+    ///if he is calls for success, if not, calls for manual authentication
+    ///</summary>
     private void ProcessServerAuthCode(string serverAuthCode)
     {
-        text.text = "Server Auth Code: " + serverAuthCode;
+        // text.text = "Server Auth Code: " + serverAuthCode;
 
         var request = new LoginWithGooglePlayGamesServicesRequest
         {
@@ -76,13 +81,20 @@ public class PlayfabGooglePlayGames : MonoBehaviour
         PlayFabClientAPI.LoginWithGooglePlayGamesServices(request, OnLoginWithGooglePlayGamesServicesSuccess, OnLoginWithGooglePlayGamesServicesFailure);
     }
 
+    ///<summary>
+    ///If the user is automatically authenticated, checks for the name in the player profile.<br/>
+    ///if the name doesn't exists, activates the UI to create a new name<br/>
+    ///if the name exists, saves the name and shows the welcome text and start text
+    ///</summary>
     private void OnLoginWithGooglePlayGamesServicesSuccess(LoginResult result)
     {
         isAuth =true;
+        //Name doesn't exist, that means new player who must select a player name
         if (result.InfoResultPayload.PlayerProfile.DisplayName== null){
             uiManager.UserNoName();
-            nameText.text = result.InfoResultPayload.PlayerProfile.DisplayName + "profile exists";
+            // nameText.text = result.InfoResultPayload.PlayerProfile.DisplayName + "profile exists";
         }
+        //Name exists so, user data is saved for posterior uses.
         else{
             string userName = result.InfoResultPayload.PlayerProfile.DisplayName;
 
@@ -91,18 +103,24 @@ public class PlayfabGooglePlayGames : MonoBehaviour
             PlayerPrefs.SetString("username", userName);
 
             uiManager.UserIsAuth(userName);
-            nameText.text = "profile does NOT exists";
+            // nameText.text = "profile does NOT exists";
         }
-        text.text = "PF Login Success LoginWithGooglePlayGamesServices";
+        // text.text = "PF Login Success LoginWithGooglePlayGamesServices";
     }
 
+    ///<summary>
+    ///If player is not authomatically authenticated, the manual authentication button will appear.
+    ///</summary>
     private void OnLoginWithGooglePlayGamesServicesFailure(PlayFabError error)
     {
         isAuth =false;
         uiManager.UserIsNotAuth();
-        text.text = "PF Login Failure LoginWithGooglePlayGamesServices: " + error.GenerateErrorReport();
+        // text.text = "PF Login Failure LoginWithGooglePlayGamesServices: " + error.GenerateErrorReport();
     }
 
+    ///<summary>
+    ///activates manual authentication.
+    ///</summary>
     public void TryAuthentication(){
         PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
     }

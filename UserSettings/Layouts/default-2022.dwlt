@@ -482,9 +482,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 404c0000
+      m_SelectedIDs: e8450000
       m_LastClickedID: 0
-      m_ExpandedIDs: 0efbffff
+      m_ExpandedIDs: 0efbffff546e00000e730000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -916,9 +916,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 577.7551, y: 338.06274, z: -2.8137326}
+    m_Target: {x: 684.2298, y: 339.76053, z: -3.6819959}
     speed: 2
-    m_Value: {x: 577.7551, y: 338.06274, z: -2.8137326}
+    m_Value: {x: 684.2298, y: 339.76053, z: -3.6819959}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -968,9 +968,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 352.69156
+    m_Target: 439.51785
     speed: 2
-    m_Value: 352.69156
+    m_Value: 439.51785
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1040,7 +1040,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/LeaderBoard
+    - Assets/Scripts/Grid
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1048,16 +1048,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/LeaderBoard
+  - Assets/Scripts/Grid
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\matna\projects\GameDevProjects\SnakeRebirth
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 230}
-    m_SelectedIDs: 92740000
-    m_LastClickedID: 29842
-    m_ExpandedIDs: 00000000327400005a740000ffffff7f
+    m_SelectedIDs: 98740000
+    m_LastClickedID: 29848
+    m_ExpandedIDs: 000000002e74000056740000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1085,7 +1085,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000032740000
+    m_ExpandedIDs: 000000002e740000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

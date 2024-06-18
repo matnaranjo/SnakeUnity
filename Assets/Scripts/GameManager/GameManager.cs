@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +30,8 @@ public class GameManager : MonoBehaviour
         set{isAlive = value;}
     }
     //Score and speed
-    int score = 0;
+     public int score = 0;
+    int maxScore = 0;
     int speed;
     public int Speed{
         get{return speed;}
@@ -49,21 +51,49 @@ public class GameManager : MonoBehaviour
 
     }
     
-    //
+    ///<summary>
+    ///Every time the snake eats, increases the score based on  the speed selected<br/>
+    ///going from 1 for the slowest speed to 10 the fastest one
+    ///</summary>
     public void ChangeScore(){
         score += (12 - Speed);
         scoreUI.ScoreTxt(score);
     }
 
+    ///<summary>
+    ///If the new score is higher than the highScore, return true if not false
+    ///</summary>
+    public bool isScoreNewHighScore(){
+        if(score>maxScore){
+            return true;
+        }
+        return false;
+    }
+
+    ///<summary>
+    ///Sets score to 0
+    ///</summary>
     public void ResetScore(){
         score=0;
         scoreUI.ScoreTxt(score);
     }
 
+    ///<summary>
+    ///Sends score of the player to be compared and if possible updated in the leaderboards
+    ///</summary>
     public void Death(){
         upLeaderBoard.SaveMaxScore(score);
         isAlive = false;
     }
+
+    ///<summary>
+    ///Keeps highScore updated at the beginning of every game.
+    ///</summary>
+    public void UpdateMaxScore(int leaderboardMaxScore){
+        maxScore = leaderboardMaxScore; 
+    }
+
+
     
     /// <summary>
     /// gets the value in the slider and sets the speed of the level to that refresh rate
