@@ -51,8 +51,6 @@ public class SubmitName : MonoBehaviour
     ///If it is successfull, saves ID and name in playerprefs and refreshes the UI to continue
     ///</summary>
     private void OnSuccess(UpdateUserTitleDisplayNameResult result){
-        PlayerPrefs.SetString("userid", result.Request.AuthenticationContext.PlayFabId);
-        PlayerPrefs.SetString("username", result.DisplayName);
         uiManager.UserWithName(result.DisplayName);
     }
 

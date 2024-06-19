@@ -11,6 +11,5 @@ public class Score : MonoBehaviour
     TextMeshProUGUI maxScoreTxt;
     public void ScoreTxt( int scoreInt){
         scoreTxt.text = scoreInt.ToString();
-        Debug.Log(gameObject.name);
     }
 }

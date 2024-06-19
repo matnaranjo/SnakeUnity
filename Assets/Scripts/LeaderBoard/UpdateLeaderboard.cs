@@ -73,6 +73,7 @@ public class UpdateLeaderboard : MonoBehaviour
     ///</summary>
     void OnGameCallPlayerSuccess(GetLeaderboardAroundPlayerResult result){
         List<PlayerLeaderboardEntry> playerEntry = result.Leaderboard;
+        test.text  = playerEntry.Count.ToString() + $"{playerEntry[0].StatValue}";
         menuManager.SetHighScoreUI($"{playerEntry[0].StatValue}");
         gm.UpdateMaxScore(playerEntry[0].StatValue);
     }

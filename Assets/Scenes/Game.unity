@@ -40814,11 +40814,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084b93a8e15c10547b6c51a063d7d0d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 1560523334}
   upLeaderBoard: {fileID: 1997492566}
   scoreUI: {fileID: 16803534}
   score: 0
-  finalScore: 0
 --- !u!1001 &2059495629
 PrefabInstance:
   m_ObjectHideFlags: 0
